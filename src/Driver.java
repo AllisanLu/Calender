@@ -14,7 +14,7 @@ public class Driver extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("DIS DA TITLE BC ALLI IS SO SMART");
+        primaryStage.setTitle("Life Plans");
         BorderPane root = new BorderPane();
         GridPane calender = new GridPane();
         calender.setAlignment(Pos.CENTER);
