@@ -1,10 +1,11 @@
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import java.util.ArrayList;
 
-public class Day extends VBox {
+public class Day {
+
+    private int dayNumber;
+    private ArrayList<Activity> activies;
 
     public Day(int dayNumber) {
-        this.setMaxSize(100, 100);
-        this.getChildren().add(new Text(dayNumber + ""));
+        this.dayNumber = dayNumber;
     }
 }
