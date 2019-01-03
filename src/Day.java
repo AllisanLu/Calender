@@ -9,8 +9,7 @@ public class Day {
     public Day(int dayNumber) {
         this.dayNumber = dayNumber;
         String[] days = {"Monday, Tuesday, Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-        name = days[dayNumber];
-
+        name = days[dayNumber % days.length];
         activities = new ArrayList<>();
     }
 
@@ -19,6 +18,6 @@ public class Day {
     }
 
     public String toString() {
-        return name +": " + activities;
+        return name + (dayNumber + 1) + ": " + activities;
     }
 }
