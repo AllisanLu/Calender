@@ -18,8 +18,6 @@ public class Driver extends Application {
         BorderPane root = new BorderPane();
         GridPane calender = new GridPane();
         calender.setAlignment(Pos.CENTER);
-        for (int i = 0; i < 10; i++)
-            calender.add(new Day(i), i, i);
         root.setCenter(calender);
         primaryStage.setScene(new Scene(root, 1980,1080));
         primaryStage.show();
