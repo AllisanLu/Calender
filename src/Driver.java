@@ -8,6 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javax.swing.*;
 
@@ -25,8 +27,11 @@ public class Driver extends Application {
         GridPane calender = new GridPane();
         calender.setAlignment(Pos.CENTER);
         root.setCenter(calender);
-
-        addDay(primaryStage, calender);
+        Day day = new Day(1);
+        day.addActivity(new Activity("Hello World", 30, 60));
+        day.addActivity(new Activity("What you think?", 70, 120));
+        calender.add(createDay(day), 0, 0);
+        //addDay(primaryStage, calender);
 
         primaryStage.setScene(new Scene(root, 1980,1080));
         primaryStage.show();
@@ -46,5 +51,15 @@ public class Driver extends Application {
 
         Label labelEvents = new Label("  -Eat food"); //where to add time?
         calender.add(labelEvents, 0, 1, 2, 3);
+    }
+
+    private VBox createDay(Day day) {
+        VBox dayBox = new VBox();
+        Text title = new Text(day.getName() + "   " + day.getDayNumber());
+        //title.setFont();
+        dayBox.getChildren().add(title);
+        Text activities = new Text(day.getStingActivities());
+        dayBox.getChildren().add(activities);
+        return dayBox;
     }
 }

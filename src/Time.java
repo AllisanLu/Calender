@@ -14,6 +14,9 @@ public class Time {
     public static String minutesToTimeStamp(int minutes) {
         int hours =  minutesToHours(minutes);
         minutes = minutes % 60;
+        if(minutes / 10 == 0) {
+            return hours + ":" + minutes + "0";
+        }
         return hours + ":" + minutes;
     }
 }
