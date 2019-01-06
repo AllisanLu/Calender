@@ -5,13 +5,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javax.swing.*;
 
 public class Driver extends Application {
 
@@ -25,7 +21,7 @@ public class Driver extends Application {
         BorderPane root = new BorderPane();
 
         GridPane calender = new GridPane();
-        calender.setAlignment(Pos.CENTER);
+        //calender.setAlignment(Pos.CENTER);
         root.setCenter(calender);
         Day day = new Day(1);
         day.addActivity(new Activity("Hello World", 30, 60));
@@ -55,7 +51,11 @@ public class Driver extends Application {
 
     private VBox createDay(Day day) {
         VBox dayBox = new VBox();
-        Text title = new Text(day.getName() + "   " + day.getDayNumber());
+
+        Image background = new Image("Day Design.png");
+        dayBox.setPrefSize(background.getWidth(), background.getHeight());
+        dayBox.setBackground(new Background(new BackgroundImage(background, null, null, null, null)));
+        Text title = new Text(day.getName() + "                        " + day.getDayNumber());
         //title.setFont();
         dayBox.getChildren().add(title);
         Text activities = new Text(day.getStingActivities());
