@@ -41,7 +41,7 @@ public class Day {
         this.name = name;
     }
 
-    public String getStingActivities() {
+    public String getStringActivities() {
         String rtn = "";
         for (Activity activity : activities) {
             rtn += activity + "\n";

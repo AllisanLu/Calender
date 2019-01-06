@@ -33,21 +33,21 @@ public class Driver extends Application {
         primaryStage.show();
     }
 
-    public void addDay(Stage primaryStage, GridPane calender) throws Exception {
-        ImageView dayDesign = new ImageView(new Image(Driver.class.getResourceAsStream("Day Design.png")));
-        calender.add(dayDesign, 0, 0, 2, 4);
-
-        Label labelDay = new Label(" Day 1");
-        labelDay.setStyle("-fx-font-size: 16;");
-        calender.add(labelDay, 0, 0, 1, 1);
-
-        Button add = new Button("+");
-        add.setStyle("-fx-base: #7f9ed1");
-        calender.add(add, 5, 0, 5, 3);
-
-        Label labelEvents = new Label("  -Eat food"); //where to add time?
-        calender.add(labelEvents, 0, 1, 2, 3);
-    }
+//    public void addDay(Stage primaryStage, GridPane calender) throws Exception {
+//        ImageView dayDesign = new ImageView(new Image(Driver.class.getResourceAsStream("Day Design.png")));
+//        calender.add(dayDesign, 0, 0, 2, 4);
+//
+//        Label labelDay = new Label(" Day 1");
+//        labelDay.setStyle("-fx-font-size: 16;");
+//        calender.add(labelDay, 0, 0, 1, 1);
+//
+//        Button add = new Button("+");
+//        add.setStyle("-fx-base: #7f9ed1");
+//        calender.add(add, 5, 0, 5, 3);
+//
+//        Label labelEvents = new Label("  -Eat food"); //where to add time?
+//        calender.add(labelEvents, 0, 1, 2, 3);
+//    }
 
     private VBox createDay(Day day) {
         VBox dayBox = new VBox();
@@ -55,10 +55,10 @@ public class Driver extends Application {
         Image background = new Image("Day Design.png");
         dayBox.setPrefSize(background.getWidth(), background.getHeight());
         dayBox.setBackground(new Background(new BackgroundImage(background, null, null, null, null)));
-        Text title = new Text(day.getName() + "                        " + day.getDayNumber());
+        Text title = new Text("\n  " + day.getName() + "                        " + day.getDayNumber());
         //title.setFont();
         dayBox.getChildren().add(title);
-        Text activities = new Text(day.getStingActivities());
+        Text activities = new Text(day.getStringActivities());
         dayBox.getChildren().add(activities);
         return dayBox;
     }
