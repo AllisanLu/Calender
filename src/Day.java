@@ -42,7 +42,7 @@ public class Day {
     public String getStringActivities() {
         String rtn = "";
         for (Activity activity : activities) {
-            rtn += "    " + activity + "\n";
+            rtn += activity + "\n";
         }
         return rtn;
     }

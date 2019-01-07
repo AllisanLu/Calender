@@ -1,12 +1,15 @@
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class Driver extends Application {
@@ -56,14 +59,15 @@ public class Driver extends Application {
         dayBox.setPrefSize(background.getWidth(), background.getHeight());
         dayBox.setBackground(new Background(new BackgroundImage(background, null, null, null, null)));
 
-        Text title = new Text("\n   " + day.getName() + "                        " + day.getDayNumber());
+        Text title = new Text("\n  " + day.getName() + "\t\t\t\t" + day.getDayNumber());
         //title.setFont();
         dayBox.getChildren().add(title);
 
         Button add = new Button("+");
-        add.setStyle("-fx-base: #7f9ed1");
+        add.setStyle("-fx-background-color: transparent");
+        add.setOnMouseEntered(e -> add.setStyle("-fx-base: #7f9ed1"));
+        add.setOnMouseExited(e -> add.setStyle("-fx-background-color: transparent"));
         dayBox.getChildren().add(add);
-
         Text activities = new Text(day.getStringActivities());
         dayBox.getChildren().add(activities);
         return dayBox;
