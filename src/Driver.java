@@ -55,9 +55,15 @@ public class Driver extends Application {
         Image background = new Image("Day Design.png");
         dayBox.setPrefSize(background.getWidth(), background.getHeight());
         dayBox.setBackground(new Background(new BackgroundImage(background, null, null, null, null)));
-        Text title = new Text("\n  " + day.getName() + "                        " + day.getDayNumber());
+
+        Text title = new Text("\n   " + day.getName() + "                        " + day.getDayNumber());
         //title.setFont();
         dayBox.getChildren().add(title);
+
+        Button add = new Button("+");
+        add.setStyle("-fx-base: #7f9ed1");
+        dayBox.getChildren().add(add);
+
         Text activities = new Text(day.getStringActivities());
         dayBox.getChildren().add(activities);
         return dayBox;

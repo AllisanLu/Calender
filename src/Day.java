@@ -37,14 +37,12 @@ public class Day {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) { this.name = name; }
 
     public String getStringActivities() {
         String rtn = "";
         for (Activity activity : activities) {
-            rtn += activity + "\n";
+            rtn += "    " + activity + "\n";
         }
         return rtn;
     }
