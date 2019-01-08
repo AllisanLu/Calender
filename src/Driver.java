@@ -37,12 +37,21 @@ public class Driver extends Application {
         primaryStage.show();
     }
 
-    private VBox createDay(Day day) {
-        VBox dayBox = new VBox(5);
+    private HBox createDay(Day day) {
+        HBox dayBox = new HBox(3);
+
+        //Background
+        Image background = new Image("Day Design.png");
+        dayBox.setPrefSize(background.getWidth(), background.getHeight());
+        dayBox.setBackground(new Background(new BackgroundImage(background, null, null, null, null)));
+
+        //Title of the Day
+        Text title = new Text("\n  " + day.getName() + "  " + day.getDayNumber());
+        dayBox.getChildren().add(title);
 
         //Panel to add activities.
-        HBox hiddenPanel = new HBox(20);
-        hiddenPanel.getChildren().add(new Text("Add Activity: "));
+        HBox hiddenPanel = new HBox(2);
+        hiddenPanel.getChildren().add(new Text("Add Activity:"));
         Button addActivity = new Button("+");
 
         addActivity.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -69,25 +78,20 @@ public class Driver extends Application {
         hiddenPanel.setVisible(false);
         dayBox.getChildren().add(hiddenPanel);
 
-
-
         //Setting up functionality of disappearing and reappearing button.
         dayBox.setOnMouseEntered(e -> hiddenPanel.setVisible(true));
         dayBox.setOnMouseExited(e -> hiddenPanel.setVisible(false));
 
-        //Background
-        Image background = new Image("Day Design.png");
-        dayBox.setPrefSize(background.getWidth(), background.getHeight());
-        dayBox.setBackground(new Background(new BackgroundImage(background, null, null, null, null)));
-
-        //Title of the Day
-        Text title = new Text("\n  " + day.getName() + "\t\t\t\t" + day.getDayNumber());
-        dayBox.getChildren().add(title);
-
-        //Adding activities in a list.
-        Text activities = new Text(day.getStringActivities());
-        dayBox.getChildren().add(activities);
-
         return dayBox;
     }
+    private VBox createActivities(Day day) {
+        VBox activities = new VBox(5);
+
+        //Adding activities in a list.
+        Text acts = new Text(day.getStringActivities());
+        activities.getChildren().add(activities);
+
+        return activities;
+    }
+
 }
