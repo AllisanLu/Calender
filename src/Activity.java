@@ -2,18 +2,33 @@ import java.util.ArrayList;
 
 public class Activity {
     private String name;
-    private int start;
-    private int end;
+    private int start, end;             //Time is based in minutes during the day.
 
+    /**
+     * Based on an activity some one would do during the day.
+     * Precondition:
+     *        0 > start > end > 1440(total minutes in a day)
+     */
     public Activity(String name, int start, int end) {
         this.name = name;
-        this.start = start;
-        this.end = end;
+        if(0 > start || end > 1440) {
+            this.start = 0;
+            this.end = 0;
+        }
+        else {
+            this.start = start;
+            this.end = end;
+        }
     }
 
+    /**
+     *
+     * @param activities
+     * @return true if the activity was added or false if the activity was not.
+     */
     public boolean isOverlapped(ArrayList<Activity> activities) {
         for (Activity activity: activities)
-            //activity > start > activity or activity > end > activity or start < activity and end > activity
+            //Making sure activities do not overlap.
             if((start >= activity.getStart() && start < activity.getEnd()) || (end > activity.getStart() && end < activity.getStart()) || (start < activity.getEnd() && end > activity.getEnd()))
                 return true;
         return false;

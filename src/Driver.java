@@ -15,19 +15,37 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class Driver extends Application {
+    private GridPane userInput;
 
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage){
         primaryStage.setTitle("Life Plans");
         BorderPane root = new BorderPane();
 
         GridPane calender = new GridPane();
         calender.setAlignment(Pos.CENTER);
         root.setCenter(calender);
+
+        userInput = new GridPane();
+        userInput.setHgap(15);
+        userInput.setVgap(10);
+        Text[] define = { new Text("Activity: "), new Text("Start Time: "), new Text("End Time")};
+        TextField[] inputers = { new TextField(), new TextField(), new TextField() };
+        userInput.add(new Text("New Activity"), 0, 0);
+        Button button = new Button("Insert");
+        button.setOnMouseClicked(e -> userInput.setVisible(false));
+        userInput.add(button, 0, define.length + 1);
+        for (int i = 1; i < define.length + 1; i++) {
+            userInput.add(define[i - 1], 0, i);
+            userInput.add(inputers[i - 1], 1, i);
+        }
+        userInput.setVisible(false);
+        calender.add(userInput, 0 , 0);
+
         Day day = new Day(1);
         day.addActivity(new Activity("Hello World", 30, 60));
         day.addActivity(new Activity("What you think?", 70, 120));
@@ -53,26 +71,7 @@ public class Driver extends Application {
         HBox hiddenPanel = new HBox(2);
         hiddenPanel.getChildren().add(new Text("Add Activity:"));
         Button addActivity = new Button("+");
-
-        addActivity.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                GridPane input = new GridPane();
-                input.setHgap(15);
-                input.setVgap(10);
-
-                Text activityTitle = new Text("New Activity");
-                Text[] define = { new Text("Activity: "), new Text("Start Time: "), new Text("End Time")} ;
-                TextField[] inputers = { new TextField(), new TextField(), new TextField() };
-                input.add(activityTitle, 0, 0);
-
-                for (int i = 1; i < define.length + 1; i++) {
-                    input.add(define[i - 1], i, 0);
-                    input.add(inputers[i - 1], i, i);
-                }
-                dayBox.getChildren().add(input);
-            }
-        });
+        addActivity.setOnMouseClicked(e -> userInput.setVisible(true));
 
         hiddenPanel.getChildren().add(addActivity);
         hiddenPanel.setVisible(false);
@@ -84,6 +83,7 @@ public class Driver extends Application {
 
         return dayBox;
     }
+
     private VBox createActivities(Day day) {
         VBox activities = new VBox(5);
 
