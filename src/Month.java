@@ -1,9 +1,9 @@
 import java.util.Arrays;
 
 public class Month {
-    int month;          //[0-11] [January - December]
-    String name;
-    Day[] days;
+    private int month;          //[0-11] [January - December]
+    private String name;
+    private Day[] days;
 
     public Month(int month) {
         this.month = month;
@@ -24,6 +24,10 @@ public class Month {
             return true;
         }
         return false;
+    }
+
+    public Day[] getDays() {
+        return days;
     }
 
     public String toString() {

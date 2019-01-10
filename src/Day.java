@@ -12,7 +12,7 @@ public class Day {
 
     public Day(int dayNumber) {
         this.dayNumber = dayNumber;
-        String[] days = {"Monday, Tuesday, Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
         name = days[dayNumber % days.length];
         activities = new ArrayList<>();
     }
