@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a full day of the year.
@@ -8,7 +9,7 @@ public class Day {
 
     private int dayNumber;
     private String name;
-    private ArrayList<Activity> activities;
+    private List<Activity> activities;
 
     public Day(int dayNumber) {
         this.dayNumber = dayNumber;
@@ -17,7 +18,7 @@ public class Day {
         activities = new ArrayList<>();
     }
 
-    public ArrayList<Activity> getActivities() {
+    public List<Activity> getActivities() {
         return activities;
     }
 

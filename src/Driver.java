@@ -2,10 +2,11 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class Driver extends Application {
@@ -37,8 +38,6 @@ public class Driver extends Application {
 //            userInput.add(inputers[i - 1], 1, i);
 //        }
 //
-//        userInput.setVisible(false);
-//        calender.add(userInput, 0 , 0);
         Month month = new Month(0);
         month.getDays()[0].addActivity(new Activity("Hello", 10, 30));
         int index = 0;
@@ -48,29 +47,34 @@ public class Driver extends Application {
             }
         }
 
+
         primaryStage.setScene(new Scene(root, 1980,1080));
         primaryStage.show();
     }
 
-    private HBox createDay(Day day) {
-        HBox dayBox = new HBox(3);
+    private VBox createDay(Day day) {
+        VBox dayBox = new VBox(5);
 
         //Background
         Image background = new Image("Day Design.png");
         dayBox.setPrefSize(background.getWidth(), background.getHeight());
         dayBox.setBackground(new Background(new BackgroundImage(background, null, null, null, null)));
 
-        //Title of the Day
-        addTextToPane(dayBox, "\n  " + day.getName() + "  " + day.getDayNumber());
-
         //Panel to add activities.
         HBox hiddenPanel = new HBox(2);
-        addTextToPane(hiddenPanel, "Add Activity");
+        hiddenPanel.setAlignment(Pos.CENTER);
+        hiddenPanel.getChildren().add(new Text("New Activity: "));
         Button addActivity = new Button("+");
 
         hiddenPanel.getChildren().add(addActivity);
         hiddenPanel.setVisible(false);
         dayBox.getChildren().add(hiddenPanel);
+
+        //Title of the Day
+        VBox title = new VBox(new Label(day.getName() + "  " + day.getDayNumber()));
+        title.setAlignment(Pos.CENTER);
+        dayBox.getChildren().add(title);
+
         dayBox.getChildren().add(createActivities(day));
 
         //Setting up functionality of disappearing and reappearing button.
@@ -84,7 +88,7 @@ public class Driver extends Application {
         VBox activities = new VBox(5);
 
         for(Activity activity : day.getActivities()) {
-            addTextToPane(activities, activity.toString());
+            activities.getChildren().add(new Text("  " + activity.toString()));
         }
 
         return activities;
@@ -95,8 +99,4 @@ public class Driver extends Application {
      * @param pane
      * @param texts
      */
-    private void addTextToPane(Pane pane, String... texts) {
-        for (String str: texts)
-            pane.getChildren().add(new Text(str));
-    }
 }

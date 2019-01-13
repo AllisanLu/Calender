@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Activity {
     private String name;
@@ -26,7 +27,7 @@ public class Activity {
      * @param activities
      * @return true if the activity was added or false if the activity was not.
      */
-    public boolean isOverlapped(ArrayList<Activity> activities) {
+    public boolean isOverlapped(List<Activity> activities) {
         for (Activity activity: activities)
             //Making sure activities do not overlap.
             if((start >= activity.getStart() && start < activity.getEnd()) || (end > activity.getStart() && end < activity.getStart()) || (start < activity.getEnd() && end > activity.getEnd()))

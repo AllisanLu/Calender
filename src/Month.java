@@ -14,8 +14,9 @@ public class Month {
         String[] names = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
         name = names[month];
 
+        int[] firstDay = {6, 2, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
         for (int i = 0; i < days.length; i++)
-            days[i] = new Day(i);
+            days[i] = new Day(i + firstDay[month]);
     }
 
     public boolean addActivity(int day, Activity activity) {
