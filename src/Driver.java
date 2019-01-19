@@ -58,12 +58,12 @@ public class Driver extends Application {
         VBox dayBox = new VBox(5);
 
         //Background
-        Image background = new Image("Day Design.png");
-        dayBox.setPrefSize(background.getWidth(), background.getHeight());
-        dayBox.setBackground(new Background(new BackgroundImage(background, null, null, null, null)));
+//        Image background = new Image("Day Design.png");
+//        dayBox.setPrefSize(background.getWidth(), background.getHeight());
+//        dayBox.setBackground(new Background(new BackgroundImage(background, null, null, null, null)));
 
         //Title of the Day
-        VBox title = new VBox(new Label(day.getName() + "  " + day.getDayNumber()));
+        VBox title = new VBox(new Label("\n" + day.getName() + "  " + day.getDayNumber()));
         title.setAlignment(Pos.CENTER);
         dayBox.getChildren().add(title);
 
@@ -73,6 +73,7 @@ public class Driver extends Application {
         hiddenPanel.setAlignment(Pos.CENTER);
         hiddenPanel.getChildren().add(new Text("New Activity: "));
         Button addActivity = new Button("+");
+        hiddenPanel.getStyleClass().add("Testing");
 
         hiddenPanel.getChildren().add(addActivity);
         hiddenPanel.setVisible(false);

@@ -1,6 +1,18 @@
 .button {
-    -fx-pref-width: 5px;
-    -fx-pref-length: 10px;
-    -fx-background-color: linear-gradient(#C390D4, #ab4642);
+    //-fx-pref-width: 20px;
+    //-fx-pref-length: 30px;
+    -fx-background-color: linear-gradient(#A3803E, #61481B);
     -fx-background-radius: 50;
+}
+.root{
+    -fx-font-size: 9pt;
+    -fx-font-family: "Courier New";
+    -fx-base: rgb(132, 145, 47);
+    -fx-background: rgb(225, 228, 203);
+}
+
+.hbox {
+    -fx-background-color: #2f4f4f;
+    -fx-padding: 15;
+    -fx-spacing: 10;
 }
