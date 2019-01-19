@@ -47,8 +47,10 @@ public class Driver extends Application {
             }
         }
 
+        Scene scene = new Scene(root, 1980,1080);
+        scene.getStylesheets().add("Testing.css");
 
-        primaryStage.setScene(new Scene(root, 1980,1080));
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
@@ -60,8 +62,14 @@ public class Driver extends Application {
         dayBox.setPrefSize(background.getWidth(), background.getHeight());
         dayBox.setBackground(new Background(new BackgroundImage(background, null, null, null, null)));
 
+        //Title of the Day
+        VBox title = new VBox(new Label(day.getName() + "  " + day.getDayNumber()));
+        title.setAlignment(Pos.CENTER);
+        dayBox.getChildren().add(title);
+
         //Panel to add activities.
         HBox hiddenPanel = new HBox(2);
+        hiddenPanel.setAlignment(Pos.CENTER);
         hiddenPanel.setAlignment(Pos.CENTER);
         hiddenPanel.getChildren().add(new Text("New Activity: "));
         Button addActivity = new Button("+");
@@ -70,11 +78,7 @@ public class Driver extends Application {
         hiddenPanel.setVisible(false);
         dayBox.getChildren().add(hiddenPanel);
 
-        //Title of the Day
-        VBox title = new VBox(new Label(day.getName() + "  " + day.getDayNumber()));
-        title.setAlignment(Pos.CENTER);
-        dayBox.getChildren().add(title);
-
+        //the activities
         dayBox.getChildren().add(createActivities(day));
 
         //Setting up functionality of disappearing and reappearing button.
