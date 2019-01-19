@@ -77,7 +77,7 @@ public class Driver extends Application {
         hiddenPanel.getChildren().add(addActivity);
         hiddenPanel.setVisible(false);
         dayBox.getChildren().add(hiddenPanel);
-        dayBox.getStyleClass().add("vbox");
+        dayBox.getStyleClass().add("day");
 
         //the activities
         dayBox.getChildren().add(createActivities(day));
@@ -91,7 +91,7 @@ public class Driver extends Application {
 
     private VBox createActivities(Day day) {
         VBox activities = new VBox(5);
-        activities.getStyleClass().add("vbox2");
+        activities.getStyleClass().add("activities");
 
         for(Activity activity : day.getActivities()) {
             activities.getChildren().add(new Text("  " + activity.toString()));
