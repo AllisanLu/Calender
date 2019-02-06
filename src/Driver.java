@@ -44,7 +44,7 @@ public class Driver extends Application {
         int index = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 7; j++) {
-                calender.add(Create.createDay(month.getDays()[index++]), j, i); //wtf are j and i
+                calender.add(createDay(month.getDays()[index++]), j, i); //wtf are j and i
             }
         }
 
@@ -54,4 +54,55 @@ public class Driver extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+    public static VBox createDay(Day day) {
+        VBox dayBox = new VBox(5);
+
+        //Background
+//        Image background = new Image("Day Design.png");
+//        dayBox.setPrefSize(background.getWidth(), background.getHeight());
+//        dayBox.setBackground(new Background(new BackgroundImage(background, null, null, null, null)));
+
+        //Title of the Day
+        VBox title = new VBox(new Label("\n" + day.getName() + "  " + day.getDayNumber()));
+        title.setAlignment(Pos.CENTER);
+        dayBox.getChildren().add(title);
+
+        //Panel to add activities.
+        HBox hiddenPanel = new HBox(2);
+        hiddenPanel.setAlignment(Pos.CENTER);
+        hiddenPanel.setAlignment(Pos.CENTER);
+        hiddenPanel.getChildren().add(new Text("New Activity: "));
+        Button addActivity = new Button("+");
+
+        hiddenPanel.getChildren().add(addActivity);
+        hiddenPanel.setVisible(false);
+        dayBox.getChildren().add(hiddenPanel);
+        dayBox.getStyleClass().add("day");
+
+        //the activities
+        dayBox.getChildren().add(createActivities(day));
+
+        //Setting up functionality of disappearing and reappearing button.
+        dayBox.setOnMouseEntered(e -> hiddenPanel.setVisible(true));
+        dayBox.setOnMouseExited(e -> hiddenPanel.setVisible(false));
+
+        return dayBox;
+    }
+
+    private static VBox createActivities(Day day) {
+        VBox activities = new VBox(5);
+        activities.getStyleClass().add("activities");
+
+        for(Activity activity : day.getActivities()) {
+            activities.getChildren().add(new Text("  " + activity.toString()));
+        }
+
+        return activities;
+    }
+    /**
+     * Adds text to Pane in the order of the array entered.
+     * @param pane
+     * @param texts
+     */
 }
