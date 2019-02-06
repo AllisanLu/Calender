@@ -3,6 +3,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -24,20 +25,21 @@ public class Driver extends Application {
         calender.setAlignment(Pos.CENTER_LEFT);
         root.getChildren().add(calender);
 
-//        userInput = new GridPane();
-//        userInput.setHgap(15);
-//        userInput.setVgap(10);
-//        Text[] define = { new Text("Activity: "), new Text("Start Time: "), new Text("End Time")};
-//        TextField[] inputers = { new TextField(), new TextField(), new TextField() };
-//        userInput.add(new Text("New Activity"), 0, 0);
-//        Button button = new Button("Insert");
-//        button.setOnMouseClicked(e -> userInput.setVisible(false));
-//        userInput.add(button, 0, define.length + 1);
-//        for (int i = 1; i < define.length + 1; i++) {
-//            userInput.add(define[i - 1], 0, i);
-//            userInput.add(inputers[i - 1], 1, i);
-//        }
-//
+        GridPane userInput = new GridPane();
+        userInput.setHgap(15);
+        userInput.setVgap(10);
+        Text[] define = { new Text("Activity: "), new Text("Start Time: "), new Text("End Time")};
+        TextField[] inputers = { new TextField(), new TextField(), new TextField() };
+
+        userInput.add(new Text("New Activity"), 0, 0);
+        Button button = new Button("Insert");
+        button.setOnMouseClicked(e -> userInput.setVisible(false));
+        userInput.add(button, 0, define.length + 1);
+        for (int i = 1; i < define.length + 1; i++) {
+            userInput.add(define[i - 1], 0, i);
+            userInput.add(inputers[i - 1], 1, i);
+        }
+
         Month month = new Month(0);
         month.getDays()[0].addActivity(new Activity("Hello", 10, 30));
 
@@ -55,13 +57,8 @@ public class Driver extends Application {
         primaryStage.show();
     }
 
-    public static VBox createDay(Day day) {
+    private static VBox createDay(Day day) {
         VBox dayBox = new VBox(5);
-
-        //Background
-//        Image background = new Image("Day Design.png");
-//        dayBox.setPrefSize(background.getWidth(), background.getHeight());
-//        dayBox.setBackground(new Background(new BackgroundImage(background, null, null, null, null)));
 
         //Title of the Day
         VBox title = new VBox(new Label("\n" + day.getName() + "  " + day.getDayNumber()));
@@ -95,14 +92,21 @@ public class Driver extends Application {
         activities.getStyleClass().add("activities");
 
         for(Activity activity : day.getActivities()) {
-            activities.getChildren().add(new Text("  " + activity.toString()));
+            Text activityText = new Text("  " + activity.toString());
+            activityText.setOnMouseDragged(e -> {
+                Text newText = new Text(" " + activity.toString());
+                newText.setOnMouseDragged(j -> {
+                    newText.setX(j.getX());
+                    newText.setY(j.getY());
+                });
+                newText.setOnMouseReleased(j ->{
+
+                });
+                activities.getChildren().remove(activityText);
+                    });
+            activities.getChildren().add(activityText);
         }
 
         return activities;
     }
-    /**
-     * Adds text to Pane in the order of the array entered.
-     * @param pane
-     * @param texts
-     */
 }

@@ -11,10 +11,11 @@ public class Day {
     private String name;
     private List<Activity> activities;
 
-    public Day(int dayNumber) {
+    public static final String[] DAYS_OF_WEEK = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+
+    public Day(int dayNumber, String name) {
         this.dayNumber = dayNumber;
-        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-        name = days[dayNumber % days.length];
+        this.name = name;
         activities = new ArrayList<>();
     }
 
