@@ -19,7 +19,7 @@ public class Driver extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Hello, World");
         BorderPane root = new BorderPane();
-        Scene scene = new Scene(root, 400, 400);
+        Scene scene = new Scene(root, 500, 400);
         scene.getStylesheets().add("Testing.css");
 
         initializeMonths();
@@ -45,9 +45,9 @@ public class Driver extends Application {
             return;
 
         calender = new TilePane(5, 20);
-        calender.setPrefRows(7);
-        calender.setPrefColumns(5);
-        calender.setMaxSize(900, 500);
+        calender.setPrefRows(6);
+        calender.setPrefColumns(6);
+        calender.setMaxSize(1200, 500);
 
         for(Day day : months[month].getDays())
             calender.getChildren().add(createDay(day));
@@ -60,11 +60,10 @@ public class Driver extends Application {
     private VBox createDay(Day day) {
         VBox dayBox = new VBox(5);
 
-        dayBox.setPrefSize(150, 100);
+        dayBox.setPrefSize(130, 50);
         dayBox.getStyleClass().add("day");
 
         Text title = new Text(day.getName() + " "  +day.getDayNumber());
-        title.setTextAlignment(TextAlignment.CENTER);
         dayBox.getChildren().add(title);
 
         HBox panel = createDayPanel(day);
@@ -73,6 +72,8 @@ public class Driver extends Application {
         dayBox.getChildren().add(panel);
 
         VBox activityHolder = new VBox(5);
+        //activityHolder.getStyleClass().add("activities"); use this later to add activies
+
         for(Activity activity : day.getActivities())
             activityHolder.getChildren().add(new Text(activity.toString()));
 
