@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class Month {
-    String[] names = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    private static final String[] MONTH_NAMES = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     private int month;          //[0-11] [January - December]
     private String name;
     private Day[] days;
@@ -12,7 +12,7 @@ public class Month {
         int[] monthDays = {31,28,31,30,31,30,31,31,30,31,30,31};
         days = new Day[monthDays[month]];
 
-        name = names[month];
+        name = MONTH_NAMES[month];
 
         int[] firstDay = {6, 2, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
         for(int i = 1; i <= days.length; i++)
@@ -25,6 +25,10 @@ public class Month {
             return true;
         }
         return false;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Day[] getDays() {

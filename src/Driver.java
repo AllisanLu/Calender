@@ -1,112 +1,123 @@
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class Driver extends Application {
-
-    public static void main(String[] args) {
-        launch(args);
-    }
+    private TilePane calender;
+    private Text title;
+    private Month[] months;
+    private Day previouslyClicked;
+    private GridPane userInput;
 
     @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Life Plans");
-        VBox root = new VBox(200);
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Hello, World");
+        BorderPane root = new BorderPane();
+        Scene scene = new Scene(root, 400, 400);
 
-        GridPane calender = new GridPane();
-        calender.setAlignment(Pos.CENTER_LEFT);
-        root.getChildren().add(calender);
-
-        GridPane userInput = new GridPane();
-        userInput.setHgap(15);
-        userInput.setVgap(10);
-        Text[] define = { new Text("Activity: "), new Text("Start Time: "), new Text("End Time")};
-        TextField[] inputers = { new TextField(), new TextField(), new TextField() };
-
-        userInput.add(new Text("New Activity"), 0, 0);
-        Button button = new Button("Insert");
-        button.setOnMouseClicked(e -> userInput.setVisible(false));
-        userInput.add(button, 0, define.length + 1);
-        for (int i = 1; i < define.length + 1; i++) {
-            userInput.add(define[i - 1], 0, i);
-            userInput.add(inputers[i - 1], 1, i);
-        }
-
-        Month month = new Month(0);
-        month.getDays()[0].addActivity(new Activity("Hello", 10, 30));
-
-        int index = 0;
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 7; j++) {
-                calender.add(createDay(month.getDays()[index++]), j, i); //wtf are j and i
-            }
-        }
-
-        Scene scene = new Scene(root, 1980,1080);
-        scene.getStylesheets().add("Testing.css");
+        initializeMonths();
+        createUserInput();
+        setMonth(0);
+        root.setCenter(calender);
+        root.setTop(title);
 
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    private static VBox createDay(Day day) {
+    private void initializeMonths() {
+        months = new Month[12];
+
+        for(int i = 0; i < months.length; i++)
+            months[i] = new Month(i);
+    }
+
+    private void setMonth(int month) {
+        if(0 > month || month > 12)
+            return;
+
+        calender = new TilePane(5, 20);
+        calender.setPrefRows(7);
+        calender.setPrefColumns(5);
+        calender.setMaxSize(900, 500);
+
+        for(Day day : months[month].getDays())
+            calender.getChildren().add(createDay(day));
+
+        System.out.println(calender);
+        calender.setVisible(true);
+
+        title = new Text(months[month].getName());
+    }
+
+    private VBox createDay(Day day) {
         VBox dayBox = new VBox(5);
 
-        //Title of the Day
-        VBox title = new VBox(new Label("\n" + day.getName() + "  " + day.getDayNumber()));
-        title.setAlignment(Pos.CENTER);
+        dayBox.setPrefSize(150, 100);
+
+        Text title = new Text(day.getName() + " "  +day.getDayNumber());
+        title.setTextAlignment(TextAlignment.CENTER);
         dayBox.getChildren().add(title);
 
-        //Panel to add activities.
-        HBox hiddenPanel = new HBox(2);
-        hiddenPanel.setAlignment(Pos.CENTER);
-        hiddenPanel.setAlignment(Pos.CENTER);
-        hiddenPanel.getChildren().add(new Text("New Activity: "));
-        Button addActivity = new Button("+");
+        HBox panel = createDayPanel(day);
+        dayBox.setOnMouseEntered(e -> panel.setVisible(true));
+        dayBox.setOnMouseExited(e -> panel.setVisible(false));
+        dayBox.getChildren().add(panel);
 
-        hiddenPanel.getChildren().add(addActivity);
-        hiddenPanel.setVisible(false);
-        dayBox.getChildren().add(hiddenPanel);
-        dayBox.getStyleClass().add("day");
+        VBox activityHolder = new VBox(5);
+        for(Activity activity : day.getActivities())
+            activityHolder.getChildren().add(new Text(activity.toString()));
 
-        //the activities
-        dayBox.getChildren().add(createActivities(day));
-
-        //Setting up functionality of disappearing and reappearing button.
-        dayBox.setOnMouseEntered(e -> hiddenPanel.setVisible(true));
-        dayBox.setOnMouseExited(e -> hiddenPanel.setVisible(false));
-
+        dayBox.getChildren().add(activityHolder);
         return dayBox;
     }
 
-    private static VBox createActivities(Day day) {
-        VBox activities = new VBox(5);
-        activities.getStyleClass().add("activities");
+    private HBox createDayPanel(Day day) {
+        HBox panel = new HBox(5);
 
-        for(Activity activity : day.getActivities()) {
-            Text activityText = new Text("  " + activity.toString());
-            activityText.setOnMouseDragged(e -> {
-                Text newText = new Text(" " + activity.toString());
-                newText.setOnMouseDragged(j -> {
-                    newText.setX(j.getX());
-                    newText.setY(j.getY());
-                });
-                newText.setOnMouseReleased(j ->{
+        Text activity = new Text("Add Activity: ");
+        panel.getChildren().add(activity);
 
-                });
-                activities.getChildren().remove(activityText);
-                    });
-            activities.getChildren().add(activityText);
+        Button addActivity = addActivity(day);
+
+        panel.getChildren().add(addActivity);
+
+        panel.setVisible(false);
+
+        return panel;
+    }
+
+    private Button addActivity(Day day) {
+        Button add = new Button("+");
+        add.setOnMouseClicked(e -> {
+            userInput.setVisible(true);
+            previouslyClicked = day;
+        });
+
+        return add;
+    }
+
+    private void createUserInput() {
+        userInput = new GridPane();
+        userInput.setHgap(10);
+        userInput.setHgap(10);
+
+        String[] instructions = {"Activity:", "Start: ", "End: "};
+        TextField[] textInput = { new TextField(), new TextField(), new TextField()};
+
+        for(int i = 0; i < instructions.length; i++) {
+            userInput.add(new Text(instructions[i]), 0, i);
+            userInput.add(textInput[i], 1, i);
         }
 
-        return activities;
+        Button submit = new Button("+");
+        userInput.add(submit, 0,textInput.length + 1);
+
+        userInput.setVisible(false);
     }
 }

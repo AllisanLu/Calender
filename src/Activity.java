@@ -50,6 +50,15 @@ public class Activity {
     }
 
     public String toString() {
-        return name + " [" + Time.minutesToTimeStamp(start) + " - " + Time.minutesToTimeStamp(end) + "]";
+        return name + "[" + minutesToHours(start) + " - " + minutesToHours(end) + "]";
+
+    }
+
+    private String minutesToHours(int minutes) {
+        String rtn =  minutes / 60 + ":";
+        int leftOver = minutes % 60;
+        if(leftOver < 10)
+            rtn += "0";
+        return rtn + leftOver;
     }
 }
