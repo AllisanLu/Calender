@@ -18,11 +18,16 @@
 .day{
     -fx-border-color: #0A5E07;
     -fx-padding: 0;
+    -fx-alignment: CENTER;
+}
 
+.panel{
+    -fx-alignment: CENTER;
 }
 
 .activities{
     -fx-border-color: #76AD74;
     -fx-padding: 50;
+    -fx-alignment: CENTER;
 }
 

@@ -20,6 +20,7 @@ public class Driver extends Application {
         primaryStage.setTitle("Hello, World");
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 400, 400);
+        scene.getStylesheets().add("Testing.css");
 
         initializeMonths();
         createUserInput();
@@ -60,6 +61,7 @@ public class Driver extends Application {
         VBox dayBox = new VBox(5);
 
         dayBox.setPrefSize(150, 100);
+        dayBox.getStyleClass().add("day");
 
         Text title = new Text(day.getName() + " "  +day.getDayNumber());
         title.setTextAlignment(TextAlignment.CENTER);
@@ -80,6 +82,7 @@ public class Driver extends Application {
 
     private HBox createDayPanel(Day day) {
         HBox panel = new HBox(5);
+        panel.getStyleClass().add("panel");
 
         Text activity = new Text("Add Activity: ");
         panel.getChildren().add(activity);
