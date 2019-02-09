@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -24,6 +25,7 @@ public class Driver extends Application {
         createUserInput();
         setMonth(0);
         root.setCenter(calender);
+        calender.getChildren().add(userInput);
         root.setTop(title);
 
         primaryStage.setScene(scene);
@@ -49,7 +51,6 @@ public class Driver extends Application {
         for(Day day : months[month].getDays())
             calender.getChildren().add(createDay(day));
 
-        System.out.println(calender);
         calender.setVisible(true);
 
         title = new Text(months[month].getName());
@@ -83,7 +84,7 @@ public class Driver extends Application {
         Text activity = new Text("Add Activity: ");
         panel.getChildren().add(activity);
 
-        Button addActivity = addActivity(day);
+        Button addActivity = revealUserInput(day);
 
         panel.getChildren().add(addActivity);
 
@@ -92,7 +93,7 @@ public class Driver extends Application {
         return panel;
     }
 
-    private Button addActivity(Day day) {
+    private Button revealUserInput(Day day) {
         Button add = new Button("+");
         add.setOnMouseClicked(e -> {
             userInput.setVisible(true);
@@ -116,8 +117,24 @@ public class Driver extends Application {
         }
 
         Button submit = new Button("+");
+        submit.setOnMouseClicked(e -> {
+            addActivity();
+            userInput.setVisible(false);
+        });
         userInput.add(submit, 0,textInput.length + 1);
 
         userInput.setVisible(false);
+    }
+
+    private void addActivity() {
+        String[] answers = new String[3];
+        int index = 0;
+        for(Node node : userInput.getChildren()) {
+            if(node instanceof TextField) {
+                TextField text = (TextField) node;
+                answers[index++] = text.getText();
+            }
+        }
+        previouslyClicked.addActivity(new Activity(answers[0], Integer.valueOf(answers[1]), Integer.valueOf(answers[2])));
     }
 }
