@@ -17,7 +17,7 @@ public class Driver extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Hello, World");
+        primaryStage.setTitle("Things to Do");
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 500, 400);
         scene.getStylesheets().add("Testing.css");
