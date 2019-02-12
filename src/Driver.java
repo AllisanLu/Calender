@@ -52,6 +52,8 @@ public class Driver extends Application {
         for(Day day : months[month].getDays())
             calender.getChildren().add(createDay(day));
 
+        calender.getChildren().add(nextMonth());
+
         calender.setVisible(true);
 
         title = new Text(months[month].getName());
@@ -105,6 +107,15 @@ public class Driver extends Application {
         });
 
         return add;
+    }
+
+    private Button nextMonth() {
+        Button change = new Button("-->");
+        change.setOnMouseClicked(e -> {
+            setMonth();
+        });
+
+        return change;
     }
 
     private void createUserInput() {
