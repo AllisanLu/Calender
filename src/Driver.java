@@ -10,24 +10,25 @@ import javafx.stage.Stage;
 
 public class Driver extends Application {
     private TilePane calender;
+    private BorderPane root;
     private Text title;
     private Month[] months;
+    private int monthAt = 0;
     private Day previouslyClicked;
     private GridPane userInput;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Things to Do");
-        BorderPane root = new BorderPane();
+        root = new BorderPane();
         Scene scene = new Scene(root, 500, 400);
         scene.getStylesheets().add("Testing.css");
 
         initializeMonths();
         createUserInput();
-        setMonth(0);
+        setMonth(monthAt);
         root.setCenter(calender);
         calender.getChildren().add(userInput);
-        root.setTop(title);
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -41,7 +42,7 @@ public class Driver extends Application {
     }
 
     private void setMonth(int month) {
-        if(0 > month || month > 12)
+        if(0 > month || month > 11)
             return;
 
         calender = new TilePane(5, 20);
@@ -56,7 +57,17 @@ public class Driver extends Application {
 
         calender.setVisible(true);
 
+        createTitleBox(month);
+    }
+
+    private void createTitleBox(int month) {
+        HBox titleBox = new HBox();
+        titleBox.autosize();
+        titleBox.getChildren().add(previousMonth());
         title = new Text(months[month].getName());
+        titleBox.getChildren().add(title);
+        titleBox.getChildren().add(nextMonth());
+        root.setTop(titleBox);
     }
 
     private VBox createDay(Day day) {
@@ -112,7 +123,18 @@ public class Driver extends Application {
     private Button nextMonth() {
         Button change = new Button("-->");
         change.setOnMouseClicked(e -> {
-            setMonth();
+            monthAt++;
+            setMonth(monthAt);
+        });
+
+        return change;
+    }
+
+    private Button previousMonth() {
+        Button change = new Button("<--");
+        change.setOnMouseClicked(e -> {
+            monthAt--;
+            setMonth(monthAt);
         });
 
         return change;
@@ -151,5 +173,6 @@ public class Driver extends Application {
             }
         }
         previouslyClicked.addActivity(new Activity(answers[0], Integer.valueOf(answers[1]), Integer.valueOf(answers[2])));
+        System.out.println(previouslyClicked);
     }
 }
