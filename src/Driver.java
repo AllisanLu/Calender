@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Driver extends Application {
@@ -28,7 +29,7 @@ public class Driver extends Application {
         createUserInput();
         setMonth(monthAt);
         root.setCenter(calender);
-        calender.getChildren().add(userInput);
+        //calender.getChildren().add(userInput);
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -53,8 +54,6 @@ public class Driver extends Application {
         for(Day day : months[month].getDays())
             calender.getChildren().add(createDay(day));
 
-        calender.getChildren().add(nextMonth());
-
         calender.setVisible(true);
 
         createTitleBox(month);
@@ -73,7 +72,7 @@ public class Driver extends Application {
     private VBox createDay(Day day) {
         VBox dayBox = new VBox(5);
 
-        dayBox.setPrefSize(130, 50);
+        dayBox.setPrefSize(150, 90);
         dayBox.getStyleClass().add("day");
 
         Text title = new Text(day.getName() + " "  +day.getDayNumber());
@@ -113,8 +112,16 @@ public class Driver extends Application {
     private Button revealUserInput(Day day) {
         Button add = new Button("+");
         add.setOnMouseClicked(e -> {
-            userInput.setVisible(true);
+            Stage popUp = new Stage();
+            popUp.initModality(Modality.NONE);
+           // popUp.initOwner(primaryStage);
+            createUserInput();
+            Scene scene = new Scene(userInput, 50, 90);
+            scene.getStylesheets().add("Testing.css");
             previouslyClicked = day;
+            popUp.show();
+
+//            userInput.setVisible(true);
         });
 
         return add;
