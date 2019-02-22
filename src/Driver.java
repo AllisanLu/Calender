@@ -115,9 +115,11 @@ public class Driver extends Application {
             Stage popUp = new Stage();
             popUp.initModality(Modality.NONE);
            // popUp.initOwner(primaryStage);
-            createUserInput();
-            Scene scene = new Scene(userInput, 50, 90);
-            scene.getStylesheets().add("Testing.css");
+
+            BorderPane bg = new BorderPane();
+            Scene scene = new Scene(bg, 10, 20);
+            //scene.getStylesheets().add("Testing.css");
+            bg.setCenter(userInput);
             previouslyClicked = day;
             popUp.show();
 
