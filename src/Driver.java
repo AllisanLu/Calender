@@ -113,13 +113,15 @@ public class Driver extends Application {
         Button add = new Button("+");
         add.setOnMouseClicked(e -> {
             Stage popUp = new Stage();
+            popUp.setTitle("+");
             popUp.initModality(Modality.NONE);
            // popUp.initOwner(primaryStage);
 
             BorderPane bg = new BorderPane();
-            Scene scene = new Scene(bg, 10, 20);
-            //scene.getStylesheets().add("Testing.css");
+            Scene scene = new Scene(bg, 180, 100);
+            scene.getStylesheets().add("Testing.css");
             bg.setCenter(userInput);
+            popUp.setScene(scene);
             previouslyClicked = day;
             popUp.show();
 
@@ -155,7 +157,7 @@ public class Driver extends Application {
         userInput.setHgap(10);
 
         String[] instructions = {"Activity:", "Start: ", "End: "};
-        TextField[] textInput = { new TextField(), new TextField(), new TextField()};
+        TextField[] textInput = {new TextField(), new TextField(), new TextField()};
 
         for(int i = 0; i < instructions.length; i++) {
             userInput.add(new Text(instructions[i]), 0, i);
@@ -169,7 +171,7 @@ public class Driver extends Application {
         });
         userInput.add(submit, 0,textInput.length + 1);
 
-        userInput.setVisible(false);
+        //userInput.setVisible(false);
     }
 
     private void addActivity() {
