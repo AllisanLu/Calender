@@ -9,12 +9,15 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+
 public class Driver extends Application {
     private TilePane calender;
     private BorderPane root;
     private Text title;
     private Month[] months;
     private int monthAt = 0;
+    private HashMap<Button, Day> map;
     private Day previouslyClicked;
     private GridPane userInput;
 
@@ -111,9 +114,10 @@ public class Driver extends Application {
 
     private Button revealUserInput(Day day) {
         Button add = new Button("+");
+        add.getId();
         add.setOnMouseClicked(e -> {
             Stage popUp = new Stage();
-            popUp.setTitle("+");
+            popUp.setTitle("Add Activity: ");
             popUp.initModality(Modality.NONE);
            // popUp.initOwner(primaryStage);
 
@@ -166,6 +170,7 @@ public class Driver extends Application {
 
         Button submit = new Button("+");
         submit.setOnMouseClicked(e -> {
+
             addActivity();
             userInput.setVisible(false);
         });
