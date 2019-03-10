@@ -1,8 +1,10 @@
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -17,8 +19,8 @@ public class Driver extends Application {
     private Text title;
     private Month[] months;
     private int monthAt = 0;
-    private HashMap<Button, Day> map;
     private Day previouslyClicked;
+    private VBox previouslyClicked2;
     private GridPane userInput;
 
     @Override
@@ -81,13 +83,13 @@ public class Driver extends Application {
         Text title = new Text(day.getName() + " "  +day.getDayNumber());
         dayBox.getChildren().add(title);
 
-        HBox panel = createDayPanel(day);
+        VBox activityHolder = new VBox(5);
+        //activityHolder.getStyleClass().add("activities"); use this later to add activies
+
+        HBox panel = createDayPanel(day, activityHolder);
         dayBox.setOnMouseEntered(e -> panel.setVisible(true));
         dayBox.setOnMouseExited(e -> panel.setVisible(false));
         dayBox.getChildren().add(panel);
-
-        VBox activityHolder = new VBox(5);
-        //activityHolder.getStyleClass().add("activities"); use this later to add activies
 
         for(Activity activity : day.getActivities())
             activityHolder.getChildren().add(new Text(activity.toString()));
@@ -96,14 +98,14 @@ public class Driver extends Application {
         return dayBox;
     }
 
-    private HBox createDayPanel(Day day) {
+    private HBox createDayPanel(Day day, VBox activities) {
         HBox panel = new HBox(5);
         panel.getStyleClass().add("panel");
 
         Text activity = new Text("Add Activity: ");
         panel.getChildren().add(activity);
 
-        Button addActivity = revealUserInput(day);
+        Button addActivity = revealUserInput(day, activities);
 
         panel.getChildren().add(addActivity);
 
@@ -112,7 +114,7 @@ public class Driver extends Application {
         return panel;
     }
 
-    private Button revealUserInput(Day day) {
+    private Button revealUserInput(Day day, VBox activities) {
         Button add = new Button("+");
         add.getId();
         add.setOnMouseClicked(e -> {
@@ -127,9 +129,8 @@ public class Driver extends Application {
             bg.setCenter(userInput);
             popUp.setScene(scene);
             previouslyClicked = day;
+            previouslyClicked2 = activities;
             popUp.show();
-
-//            userInput.setVisible(true);
         });
 
         return add;
@@ -171,7 +172,7 @@ public class Driver extends Application {
         Button submit = new Button("+");
         submit.setOnMouseClicked(e -> {
 
-            addActivity();
+            addActivity(e);
             userInput.setVisible(false);
         });
         userInput.add(submit, 0,textInput.length + 1);
@@ -179,7 +180,7 @@ public class Driver extends Application {
         //userInput.setVisible(false);
     }
 
-    private void addActivity() {
+    private void addActivity(MouseEvent e) {
         String[] answers = new String[3];
         int index = 0;
         for(Node node : userInput.getChildren()) {
@@ -188,7 +189,13 @@ public class Driver extends Application {
                 answers[index++] = text.getText();
             }
         }
-        previouslyClicked.addActivity(new Activity(answers[0], Integer.valueOf(answers[1]), Integer.valueOf(answers[2])));
-        System.out.println(previouslyClicked);
+        Activity act = new Activity(answers[0], Integer.valueOf(answers[1]), Integer.valueOf(answers[2]));
+
+        previouslyClicked.addActivity(act);
+        updateDay(previouslyClicked2, act);
+    }
+
+    private void updateDay(VBox activites, Activity activity) {
+        activites.getChildren().add(new Text(activity.toString()));
     }
 }
