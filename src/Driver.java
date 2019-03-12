@@ -31,7 +31,7 @@ public class Driver extends Application {
         scene.getStylesheets().add("Testing.css");
 
         initializeMonths();
-        createUserInput();
+        //createUserInput();
         setMonth(monthAt);
         root.setCenter(calender);
         //calender.getChildren().add(userInput);
@@ -126,6 +126,7 @@ public class Driver extends Application {
             BorderPane bg = new BorderPane();
             Scene scene = new Scene(bg, 180, 100);
             scene.getStylesheets().add("Testing.css");
+            createUserInput();
             bg.setCenter(userInput);
             popUp.setScene(scene);
             previouslyClicked = day;
@@ -174,10 +175,12 @@ public class Driver extends Application {
 
             addActivity(e);
             userInput.setVisible(false);
+            Stage stage = (Stage) submit.getScene().getWindow();
+            stage.close();
+
         });
         userInput.add(submit, 0,textInput.length + 1);
 
-        //userInput.setVisible(false);
     }
 
     private void addActivity(MouseEvent e) {
